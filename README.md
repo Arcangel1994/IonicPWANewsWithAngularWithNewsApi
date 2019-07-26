@@ -1,9 +1,8 @@
 # IonicNewsWithAngularWithNewsApi
 HttpClient, InAppBrowser, SocialSharing, IonicStorageModule, Components, Tabs
 
-<h2>Link .apk<h2><br>
 <a href="https://github.com/Arcangel1994/IonicPWANewsWithAngularWithNewsApi/blob/master/src/assets/app-debug.apk">Link .apk</a><br>
-<a href="https://ionic-pwa-4a842.firebaseapp.com">Link PWA</a><br> 
+<a href="https://ionic-pwa-4a842.firebaseapp.com">Link PWA</a><br><br>
 
 <img src="https://raw.githubusercontent.com/Arcangel1994/IonicNewsWithAngularWithNewsApi/master/src/assets/android/NewsTodayClickImage.jpg" /> <br>
 
