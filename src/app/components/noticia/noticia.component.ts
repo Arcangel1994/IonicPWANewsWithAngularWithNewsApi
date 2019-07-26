@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Article } from '../../interfaces/interfaces';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { ActionSheetController, ToastController  } from '@ionic/angular';
+import { ActionSheetController, ToastController, Platform } from '@ionic/angular';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { DataLocalService } from '../../services/data-local.service';
 
@@ -20,7 +20,8 @@ export class NoticiaComponent implements OnInit {
               private socialSharing: SocialSharing,
               private actionSheetCtrl: ActionSheetController,
               private dataLocalService: DataLocalService,
-              private toastCtrl: ToastController) { }
+              private toastCtrl: ToastController,
+              private platform: Platform) { }
 
   ngOnInit() {}
 
@@ -70,12 +71,9 @@ export class NoticiaComponent implements OnInit {
           cssClass: 'action-dark',
           handler: () => {
           console.log('Share clicked');
-          this.socialSharing.share(
-            this.noticia.title,
-            this.noticia.source.name,
-            '',
-            this.noticia.url
-          );
+
+          this.compartirNoticia();
+
           }
         },
         Options,
@@ -100,6 +98,37 @@ export class NoticiaComponent implements OnInit {
       mode: 'ios'
     });
     toast.present();
+  }
+
+  compartirNoticia() {
+
+    if (this.platform.is('cordova') ) {
+
+      this.socialSharing.share(
+        this.noticia.title,
+        this.noticia.source.name,
+        '',
+        this.noticia.url
+      );
+
+    } else {
+
+      // tslint:disable-next-line:no-string-literal
+      if (navigator['share'] ) {
+        // tslint:disable-next-line:no-string-literal
+        navigator['share']({
+            title: this.noticia.title,
+            text: this.noticia.description ,
+            url: this.noticia.url,
+        })
+          .then(() => console.log('Successful share'))
+          .catch((error) => console.log('Error sharing', error));
+      } else {
+        this.presentToast(`Could not share, your device does not support this function.`, 'warning');
+      }
+
+    }
+
   }
 
 }
